@@ -1,10 +1,10 @@
 import './index.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import BookingSection from './components/Bookingsection'
+import BookingSection from './components/booking-temp'
 import TrackingSection from './components/TrackingSection'
 import RoutesSection from './components/RoutesSection'
-import AboutSection from './components/Aboutsection'
+import AboutSection from './components/about-temp'
 
 function App() {
   return (
