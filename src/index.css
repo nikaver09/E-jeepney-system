@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap');
+
+:root {
+  --forest: #0f2b1a;
+  --deep: #08160e;
+  --pine: #1a3d26;
+  --moss: #2d5a3d;
+  --leaf: #4a8c5c;
+  --lime: #7bc47a;
+  --glow: #a8e6a3;
+  --cream: #f0ede4;
+  --sand: #d4c9a8;
+  --amber: #e8b84b;
+  --text-main: #e8f0e8;
+  --text-muted: #8aab8a;
+  --glass: rgba(255,255,255,0.04);
+  --glass-border: rgba(255,255,255,0.08);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--deep);
+  color: var(--text-main);
+  overflow-x: hidden;
+}
+h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--deep); }
+::-webkit-scrollbar-thumb { background: var(--moss); border-radius: 3px; }
+.glass-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+}
