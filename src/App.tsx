@@ -8,13 +8,30 @@ import AboutSection from './components/about-temp'
 
 function App() {
   return (
-    <div style={{ minHeight: '100vh', background: '#08160e' }}>
+    <div className="app-container">
       <Navbar />
-      <Hero />
-      <BookingSection />
-      <TrackingSection />
-      <RoutesSection />
-      <AboutSection />
+
+      <main className="mobile-layout">
+        <section className="section-spacing">
+          <Hero />
+        </section>
+
+        <section className="section-spacing">
+          <BookingSection />
+        </section>
+
+        <section className="section-spacing">
+          <TrackingSection />
+        </section>
+
+        <section className="section-spacing">
+          <RoutesSection />
+        </section>
+
+        <section className="section-spacing">
+          <AboutSection />
+        </section>
+      </main>
     </div>
   )
 }
