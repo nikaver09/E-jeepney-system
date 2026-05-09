@@ -92,3 +92,543 @@ body,
     gap: 40px;
   }
 }
+
+/* ====================================
+   TRACKING SECTION
+==================================== */
+
+.tracking-section {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    340px 1fr;
+
+  gap: 1.5rem;
+
+  padding: 2rem;
+
+  min-height: 100vh;
+
+  overflow: hidden;
+}
+
+/* ====================================
+   SIDEBAR
+==================================== */
+
+.tracking-sidebar {
+  position: sticky;
+
+  top: 20px;
+
+  height: fit-content;
+
+  padding: 1.5rem;
+
+  border-radius: 28px;
+
+  background:
+    rgba(255,255,255,0.03);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 0 30px rgba(0,0,0,0.25);
+}
+
+/* TOP */
+
+.sidebar-top {
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+
+  margin-bottom: 1.8rem;
+}
+
+.sidebar-icon {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #7bc47a,
+      #4a8c5c
+    );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #08160e;
+}
+
+.sidebar-top h2 {
+  font-size: 1.5rem;
+
+  color: white;
+
+  font-weight: 800;
+}
+
+.sidebar-top p {
+  color:
+    rgba(255,255,255,0.5);
+
+  font-size: 0.82rem;
+}
+
+/* ====================================
+   LIVE STATUS
+==================================== */
+
+.live-status {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 2rem;
+
+  color: #7bc47a;
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  background: #7bc47a;
+
+  animation: pulse 1.5s infinite;
+}
+
+/* ====================================
+   FLEET LIST
+==================================== */
+
+.fleet-list {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+.fleet-card {
+  padding: 1rem;
+
+  border-radius: 22px;
+
+  background:
+    rgba(255,255,255,0.03);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  cursor: pointer;
+
+  transition:
+    transform 0.25s ease,
+    border 0.25s ease,
+    background 0.25s ease;
+}
+
+.fleet-card:hover {
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(123,196,122,0.25);
+}
+
+.fleet-card.active {
+  background:
+    rgba(123,196,122,0.08);
+
+  border-color: #7bc47a;
+
+  box-shadow:
+    0 0 20px
+    rgba(123,196,122,0.12);
+}
+
+/* TOP */
+
+.fleet-top {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 1rem;
+}
+
+.fleet-top h3 {
+  color: white;
+
+  font-size: 1rem;
+
+  margin-bottom: 0.3rem;
+}
+
+.fleet-top p {
+  color:
+    rgba(255,255,255,0.5);
+
+  font-size: 0.78rem;
+}
+
+/* ETA */
+
+.fleet-eta {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  color: #7bc47a;
+
+  font-size: 0.8rem;
+
+  font-weight: 700;
+}
+
+/* ====================================
+   BATTERY
+==================================== */
+
+.battery-row {
+  margin-top: 0.5rem;
+}
+
+.battery-top {
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 6px;
+
+  color:
+    rgba(255,255,255,0.55);
+
+  font-size: 0.72rem;
+}
+
+.battery-top span {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.battery-bar {
+  width: 100%;
+  height: 7px;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  background:
+    rgba(255,255,255,0.08);
+}
+
+.battery-fill {
+  height: 100%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #4a8c5c,
+      #7bc47a
+    );
+}
+
+/* ====================================
+   TRACKING CARD
+==================================== */
+
+.tracking-card {
+  margin-top: 1.5rem;
+
+  padding: 1rem;
+
+  border-radius: 20px;
+
+  background:
+    rgba(123,196,122,0.08);
+
+  border:
+    1px solid
+    rgba(123,196,122,0.2);
+}
+
+.tracking-card-top {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 10px;
+
+  color: #7bc47a;
+
+  font-weight: 700;
+}
+
+.tracking-card p {
+  color:
+    rgba(255,255,255,0.7);
+
+  line-height: 1.6;
+}
+
+.tracking-card strong {
+  color: white;
+}
+
+/* ====================================
+   MAIN
+==================================== */
+
+.tracking-main {
+  display: flex;
+  flex-direction: column;
+
+  gap: 1rem;
+}
+
+/* HEADER */
+
+.tracking-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1.5rem;
+
+  border-radius: 24px;
+
+  background:
+    rgba(255,255,255,0.03);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(20px);
+}
+
+.tracking-header h1 {
+  font-size: 2rem;
+
+  color: white;
+
+  margin-bottom: 0.4rem;
+}
+
+.tracking-header p {
+  color:
+    rgba(255,255,255,0.5);
+}
+
+/* LIVE */
+
+.header-live {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 10px 16px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(123,196,122,0.08);
+
+  border:
+    1px solid
+    rgba(123,196,122,0.15);
+
+  color: #7bc47a;
+
+  font-size: 0.78rem;
+
+  font-weight: 700;
+}
+
+/* ====================================
+   MAP
+==================================== */
+
+.map-container {
+  position: relative;
+
+  width: 100%;
+
+  height: 760px;
+
+  overflow: hidden;
+
+  border-radius: 32px;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  box-shadow:
+    0 0 35px rgba(0,0,0,0.35);
+}
+
+/* LIVE BADGE */
+
+.map-live-badge {
+  position: absolute;
+
+  top: 18px;
+  left: 18px;
+
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 15px;
+
+  border-radius: 14px;
+
+  background:
+    rgba(0,0,0,0.65);
+
+  backdrop-filter: blur(16px);
+
+  border:
+    1px solid
+    rgba(255,255,255,0.08);
+
+  color: #7bc47a;
+
+  font-size: 0.75rem;
+
+  font-weight: 700;
+}
+
+/* ====================================
+   INFO WINDOW
+==================================== */
+
+.info-window {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 4px 6px;
+
+  color: #08160e;
+
+  font-weight: 700;
+}
+
+/* ====================================
+   LOADING
+==================================== */
+
+.loading-map {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 1.2rem;
+}
+
+/* ====================================
+   ANIMATION
+==================================== */
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.25);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ====================================
+   RESPONSIVE
+==================================== */
+
+@media (max-width: 1200px) {
+  .tracking-section {
+    grid-template-columns:
+      1fr;
+  }
+
+  .tracking-sidebar {
+    position: relative;
+    top: 0;
+  }
+
+  .map-container {
+    height: 550px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tracking-section {
+    padding: 1rem;
+  }
+
+  .tracking-header {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 1rem;
+  }
+
+  .tracking-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .map-container {
+    height: 420px;
+  }
+
+  .sidebar-icon {
+    width: 60px;
+    height: 60px;
+  }
+}
