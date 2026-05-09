@@ -11,34 +11,38 @@ function App() {
   return (
     <div className="app-container">
 
+      {/* BACKGROUND GLOW */}
+      <div className="bg-glow bg-glow-1" />
+      <div className="bg-glow bg-glow-2" />
+
       {/* NAVBAR */}
       <Navbar />
 
-      {/* MAIN CONTENT */}
-      <main className="mobile-layout">
+      {/* MAIN */}
+      <main className="app-layout">
 
         {/* HERO */}
-        <section className="section-spacing">
+        <section className="app-section hero-section">
           <Hero />
         </section>
 
         {/* BOOKING */}
-        <section className="section-spacing">
+        <section className="app-section">
           <BookingSection />
         </section>
 
-        {/* LIVE TRACKING */}
-        <section className="section-spacing">
+        {/* TRACKING */}
+        <section className="app-section">
           <TrackingSection />
         </section>
 
         {/* ROUTES */}
-        <section className="section-spacing">
+        <section className="app-section">
           <RoutesSection />
         </section>
 
         {/* ABOUT */}
-        <section className="section-spacing">
+        <section className="app-section">
           <AboutSection />
         </section>
 
