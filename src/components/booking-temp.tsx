@@ -4,12 +4,12 @@ import { MapPin, Clock, Users, CreditCard, ArrowRight, ChevronDown, Check } from
 
 // Fixed for TypeScript: Added Record<string, number>
 const routeFares: Record<string, number> = {
-  'Davao City — Toril': 38,
-  'Davao City — Calinan': 65,
-  'Toril — Mintal': 22,
-  'Buhangin — SM Lanang': 17,
-  'Agdao — Matina': 25,
-  'Tibungco — Downtown': 42,
+  'Davao City — Toril': 30,
+  'Davao City — Calinan': 35,
+  'Toril — Mintal': 40,
+  'Buhangin — SM Lanang': 13,
+  'Agdao — Matina': 20,
+  'Tibungco — Downtown': 30,
 }
 
 const routes = Object.keys(routeFares)
