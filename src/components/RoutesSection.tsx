@@ -72,15 +72,22 @@ const routes = [
 
 export default function RoutesSection() {
   return (
-    <section id="routes" style={{ padding: '8rem 4rem', position: 'relative' }}>
+    <section 
+      id="routes" 
+      style={{ 
+        // Fluid padding: smaller on mobile, larger on desktop
+        padding: 'clamp(4rem, 10vw, 8rem) clamp(1.2rem, 5vw, 4rem)', 
+        position: 'relative' 
+      }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-50px" }} // Helps trigger smoothly on mobile scroll
         transition={{ duration: 0.7 }}
         style={{ maxWidth: 1100, margin: '0 auto' }}
       >
-        <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: 'clamp(2.5rem, 6vw, 3.5rem)' }}>
           <div style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             background: 'rgba(107,181,214,0.1)', border: '1px solid rgba(107,181,214,0.25)',
@@ -91,26 +98,33 @@ export default function RoutesSection() {
             <MapPin size={12} />
             Service Routes
           </div>
-          <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+          <h2 style={{ fontSize: 'clamp(2rem, 6vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1 }}>
             Routes Across{' '}
             <span style={{ background: 'linear-gradient(135deg, #6bb5d6, #a8d8ea)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Davao City
             </span>
           </h2>
-          <p style={{ color: 'rgba(232,240,232,0.5)', marginTop: '1rem', fontSize: '1rem', fontWeight: 300 }}>
+          <p style={{ color: 'rgba(232,240,232,0.6)', marginTop: '1rem', fontSize: 'clamp(0.95rem, 3vw, 1.05rem)', fontWeight: 300 }}>
             24+ routes connecting communities across the metro — clean, affordable, and on time.
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.2rem' }}>
+        <div style={{ 
+          display: 'grid', 
+          // CRITICAL FIX: This makes the grid responsive. 
+          // 1 column on mobile, automatically scaling to 3 columns on desktop.
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', 
+          gap: 'clamp(1rem, 3vw, 1.5rem)' 
+        }}>
           {routes.map((route, i) => (
             <motion.div
               key={route.id}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.05, duration: 0.5 }} // Slightly faster stagger for mobile
               whileHover={{ y: -4, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 0.98 }} // Added tap state for better touch feedback
               style={{
                 background: 'rgba(255,255,255,0.025)',
                 border: '1px solid rgba(255,255,255,0.07)',
@@ -119,6 +133,9 @@ export default function RoutesSection() {
                 cursor: 'pointer',
                 position: 'relative',
                 overflow: 'hidden',
+                // Prevents text selection while tapping on mobile
+                WebkitUserSelect: 'none',
+                userSelect: 'none'
               }}
             >
               {/* Accent line */}
@@ -133,8 +150,8 @@ export default function RoutesSection() {
                 display: 'inline-flex', alignItems: 'center', gap: 6,
                 background: `${route.color}15`,
                 border: `1px solid ${route.color}30`,
-                borderRadius: 6, padding: '3px 10px',
-                fontSize: '0.7rem', fontWeight: 700, color: route.color,
+                borderRadius: 6, padding: '4px 10px', // Slightly taller for touch
+                fontSize: '0.75rem', fontWeight: 700, color: route.color,
                 marginBottom: '1rem', letterSpacing: '0.04em',
               }}>
                 <Zap size={10} />
@@ -143,45 +160,45 @@ export default function RoutesSection() {
 
               {/* From → To */}
               <div style={{ marginBottom: '1.2rem' }}>
-                <div style={{ fontSize: '0.95rem', fontWeight: 600, marginBottom: '0.4rem' }}>{route.from}</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(232,240,232,0.35)', marginBottom: '0.4rem' }}>
+                <div style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem' }}>{route.from}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: 'rgba(232,240,232,0.35)', marginBottom: '0.5rem' }}>
                   <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
-                  <ArrowRight size={12} />
+                  <ArrowRight size={14} />
                   <div style={{ flex: 1, height: '1px', background: 'rgba(255,255,255,0.08)' }} />
                 </div>
-                <div style={{ fontSize: '0.95rem', fontWeight: 600 }}>{route.to}</div>
+                <div style={{ fontSize: '1rem', fontWeight: 600 }}>{route.to}</div>
               </div>
 
               {/* Stats grid */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
                 {[
-                  { label: 'Duration', value: route.duration, icon: <Clock size={11} /> },
-                  { label: 'Distance', value: route.distance, icon: <MapPin size={11} /> },
+                  { label: 'Duration', value: route.duration, icon: <Clock size={12} /> },
+                  { label: 'Distance', value: route.distance, icon: <MapPin size={12} /> },
                   { label: 'Stops', value: `${route.stops} stops`, icon: null },
                   { label: 'Frequency', value: route.frequency, icon: null },
                 ].map((stat, j) => (
                   <div key={j} style={{
                     background: 'rgba(255,255,255,0.03)',
-                    borderRadius: 8, padding: '0.6rem 0.8rem',
+                    borderRadius: 8, padding: '0.7rem 0.8rem', // Better touch targets
                   }}>
-                    <div style={{ fontSize: '0.65rem', color: 'rgba(232,240,232,0.35)', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 3, display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <div style={{ fontSize: '0.7rem', color: 'rgba(232,240,232,0.4)', letterSpacing: '0.04em', textTransform: 'uppercase', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 4 }}>
                       {stat.icon}
                       {stat.label}
                     </div>
-                    <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>{stat.value}</div>
+                    <div style={{ fontSize: '0.9rem', fontWeight: 600 }}>{stat.value}</div>
                   </div>
                 ))}
               </div>
 
               {/* Fare */}
               <div style={{
-                marginTop: '1rem',
+                marginTop: '1.2rem',
                 display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                 paddingTop: '1rem',
                 borderTop: '1px solid rgba(255,255,255,0.06)',
               }}>
-                <span style={{ fontSize: '0.78rem', color: 'rgba(232,240,232,0.4)' }}>Base Fare</span>
-                <span style={{ fontFamily: 'Syne', fontSize: '1.2rem', fontWeight: 700, color: '#e8b84b' }}>{route.fare}</span>
+                <span style={{ fontSize: '0.85rem', color: 'rgba(232,240,232,0.5)' }}>Base Fare</span>
+                <span style={{ fontFamily: 'Syne', fontSize: '1.3rem', fontWeight: 700, color: '#e8b84b' }}>{route.fare}</span>
               </div>
             </motion.div>
           ))}
