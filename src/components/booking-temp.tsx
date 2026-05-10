@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MapPin, Clock, Users, CreditCard, ArrowRight, ChevronDown, Check } from 'lucide-react'
 
-// Dynamic fare matrix
-const routeFares = {
+// Fixed for TypeScript: Added Record<string, number>
+const routeFares: Record<string, number> = {
   'Davao City — Toril': 38,
   'Davao City — Calinan': 65,
   'Toril — Mintal': 22,
@@ -22,12 +22,12 @@ const timeSlots = [
 
 export default function BookingSection() {
   const [selectedRoute, setSelectedRoute] = useState('')
-  const [isOpen, setIsOpen] = useState(false) // State for the 3D dropdown
+  const [isOpen, setIsOpen] = useState(false)
   const [selectedTime, setSelectedTime] = useState('')
   const [passengers, setPassengers] = useState(1)
   const [booked, setBooked] = useState(false)
 
-  // Dynamic fare calculation
+  // Dynamic fare calculation (TypeScript error resolved here)
   const currentBaseFare = routeFares[selectedRoute] || 17
   const fare = passengers * currentBaseFare
 
@@ -43,7 +43,7 @@ export default function BookingSection() {
       style={{ 
         padding: 'clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 4rem)', 
         position: 'relative',
-        background: '#071a00ff',
+        background: '#071a00',
         color: '#fff',
         overflowX: 'hidden'
       }}
@@ -61,7 +61,7 @@ export default function BookingSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        style={{ maxWidth: 1100, margin: '0 auto' }}
+        style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 1 }}
       >
         {/* Heading */}
         <div style={{ textAlign: 'center', marginBottom: 'clamp(3rem, 6vw, 4rem)' }}>
@@ -315,8 +315,8 @@ export default function BookingSection() {
                 <p style={{ color: '#7bc47a', fontWeight: 600, fontSize: '1.1rem', marginBottom: '0.5rem' }}>{selectedTime}</p>
                 <p style={{ color: '#e8b84b', fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 700, marginBottom: '2rem' }}>₱{fare}</p>
                 <p style={{ color: 'rgba(232,240,232,0.5)', fontSize: '0.9rem', marginBottom: '2rem' }}>
-                  Your booking reference: <br className="mobile-break" />
-                  <strong style={{ color: '#7bc47a', letterSpacing: '1px', fontSize: '1.1rem' }}>EJ-{Math.random().toString(36).substr(2,6).toUpperCase()}</strong>
+                  Your booking reference: <br />
+                  <strong style={{ color: '#7bc47a', letterSpacing: '1px', fontSize: '1.1rem' }}>EJ-{Math.random().toString(36).substring(2,8).toUpperCase()}</strong>
                 </p>
                 <button
                   onClick={() => { setBooked(false); setSelectedRoute(''); setSelectedTime(''); setPassengers(1) }}
