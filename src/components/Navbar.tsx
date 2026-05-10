@@ -61,7 +61,7 @@ export default function Navbar() {
             <Bus size={18} color="#fff" />
           </div>
           <span style={{ fontFamily: 'Syne', fontWeight: 700, fontSize: '1rem', color: '#fff' }}>
-            E-Jeepney <span style={{ color: '#7bc47a' }}>PH</span>
+            E-Jeepney <span style={{ color: '#7bc47a' }}>Davao city</span>
           </span>
         </div>
 

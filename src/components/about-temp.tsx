@@ -222,7 +222,7 @@ export default function AboutSection() {
                 color: '#fff',
               }}
             >
-              E-Jeepney PH
+              E-Jeepney Davao city
             </div>
             <div
               style={{

@@ -1,15 +1,18 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { MapPin, Clock, Users, CreditCard, ArrowRight, ChevronDown } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { MapPin, Clock, Users, CreditCard, ArrowRight, ChevronDown, Check } from 'lucide-react'
 
-const routes = [
-  'Davao City — Toril',
-  'Davao City — Calinan',
-  'Toril — Mintal',
-  'Buhangin — SM Lanang',
-  'Agdao — Matina',
-  'Tibungco — Downtown',
-]
+// Dynamic fare matrix
+const routeFares = {
+  'Davao City — Toril': 38,
+  'Davao City — Calinan': 65,
+  'Toril — Mintal': 22,
+  'Buhangin — SM Lanang': 17,
+  'Agdao — Matina': 25,
+  'Tibungco — Downtown': 42,
+}
+
+const routes = Object.keys(routeFares)
 
 const timeSlots = [
   '6:00 AM', '7:00 AM', '8:00 AM', '9:00 AM',
@@ -19,11 +22,14 @@ const timeSlots = [
 
 export default function BookingSection() {
   const [selectedRoute, setSelectedRoute] = useState('')
+  const [isOpen, setIsOpen] = useState(false) // State for the 3D dropdown
   const [selectedTime, setSelectedTime] = useState('')
   const [passengers, setPassengers] = useState(1)
   const [booked, setBooked] = useState(false)
 
-  const fare = passengers * 13
+  // Dynamic fare calculation
+  const currentBaseFare = routeFares[selectedRoute] || 17
+  const fare = passengers * currentBaseFare
 
   const handleBook = () => {
     if (selectedRoute && selectedTime) {
@@ -81,7 +87,7 @@ export default function BookingSection() {
           </p>
         </div>
 
-        {/* Fluid Flexbox Layout: Side-by-side on desktop, stacked on mobile */}
+        {/* Fluid Flexbox Layout */}
         <div style={{ 
           display: 'flex', 
           flexWrap: 'wrap', 
@@ -91,7 +97,7 @@ export default function BookingSection() {
           
           {/* Booking Form */}
           <div style={{
-            flex: '1 1 min(100%, 450px)', // Takes up more space on desktop, 100% on mobile
+            flex: '1 1 min(100%, 450px)',
             background: 'rgba(255,255,255,0.02)',
             border: '1px solid rgba(255,255,255,0.05)',
             borderRadius: 24,
@@ -100,37 +106,86 @@ export default function BookingSection() {
           }}>
             {!booked ? (
               <>
-                {/* Route */}
-                <div style={{ marginBottom: '1.5rem' }}>
+                {/* 3D Custom Route Selector */}
+                <div style={{ marginBottom: '1.5rem', position: 'relative', zIndex: 100 }}>
                   <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#7bc47a', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '0.8rem' }}>
                     <MapPin size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: '-2px' }} />
                     Select Route
                   </label>
-                  <div style={{ position: 'relative' }}>
-                    <select
-                      value={selectedRoute}
-                      onChange={e => setSelectedRoute(e.target.value)}
-                      style={{
-                        width: '100%', 
-                        padding: '14px 16px', // Larger touch target
-                        background: 'rgba(255,255,255,0.05)',
-                        border: `1px solid ${selectedRoute ? 'rgba(123,196,122,0.4)' : 'rgba(255,255,255,0.1)'}`,
-                        borderRadius: 14,
-                        color: selectedRoute ? '#e8f0e8' : 'rgba(232,240,232,0.4)',
-                        fontSize: '1rem',
-                        outline: 'none',
-                        appearance: 'none',
-                        cursor: 'pointer',
-                        transition: 'border-color 0.2s',
-                      }}
-                    >
-                      <option value="" disabled style={{ background: '#0a1a10', color: '#fff' }}>Choose your route...</option>
-                      {routes.map(r => (
-                        <option key={r} value={r} style={{ background: '#0a1a10', color: '#fff' }}>{r}</option>
-                      ))}
-                    </select>
-                    <ChevronDown size={18} style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', color: '#7bc47a', pointerEvents: 'none' }} />
-                  </div>
+                  
+                  <motion.div 
+                    onClick={() => setIsOpen(!isOpen)}
+                    whileHover={{ backgroundColor: 'rgba(255,255,255,0.08)' }}
+                    whileTap={{ scale: 0.98, rotateX: -10 }}
+                    style={{
+                      padding: '14px 16px',
+                      background: 'rgba(255,255,255,0.05)',
+                      border: `1px solid ${selectedRoute ? 'rgba(123,196,122,0.5)' : 'rgba(255,255,255,0.1)'}`,
+                      borderRadius: 14,
+                      color: selectedRoute ? '#e8f0e8' : 'rgba(232,240,232,0.4)',
+                      fontSize: '1rem',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      perspective: '1000px',
+                      transition: 'border-color 0.2s'
+                    }}
+                  >
+                    <span>{selectedRoute || 'Choose your route...'}</span>
+                    <motion.div animate={{ rotate: isOpen ? 180 : 0 }}>
+                      <ChevronDown size={18} style={{ color: '#7bc47a' }} />
+                    </motion.div>
+                  </motion.div>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, rotateX: -25, y: -20, scale: 0.9 }}
+                        animate={{ opacity: 1, rotateX: 0, y: 8, scale: 1 }}
+                        exit={{ opacity: 0, rotateX: -25, y: -20, scale: 0.9 }}
+                        transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+                        style={{
+                          position: 'absolute',
+                          top: '100%',
+                          left: 0,
+                          right: 0,
+                          background: '#0a1a10',
+                          border: '1px solid rgba(123,196,122,0.2)',
+                          borderRadius: 14,
+                          overflow: 'hidden',
+                          boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
+                          zIndex: 200,
+                          transformOrigin: 'top',
+                          padding: '4px'
+                        }}
+                      >
+                        {routes.map((r) => (
+                          <motion.div
+                            key={r}
+                            whileHover={{ x: 6, backgroundColor: 'rgba(123,196,122,0.1)' }}
+                            onClick={() => {
+                              setSelectedRoute(r);
+                              setIsOpen(false);
+                            }}
+                            style={{
+                              padding: '12px 14px',
+                              cursor: 'pointer',
+                              borderRadius: 10,
+                              fontSize: '0.95rem',
+                              color: selectedRoute === r ? '#7bc47a' : '#e8f0e8',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between'
+                            }}
+                          >
+                            {r}
+                            {selectedRoute === r && <Check size={14} color="#7bc47a" />}
+                          </motion.div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
 
                 {/* Time */}
@@ -141,7 +196,6 @@ export default function BookingSection() {
                   </label>
                   <div style={{ 
                     display: 'grid', 
-                    // Auto-fill creates as many columns as fit the minimum width (80px), perfect for mobile wrapping
                     gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', 
                     gap: '0.6rem' 
                   }}>
@@ -150,7 +204,7 @@ export default function BookingSection() {
                         key={t}
                         onClick={() => setSelectedTime(t)}
                         style={{
-                          padding: '10px 4px', // Taller for easier tapping
+                          padding: '10px 4px',
                           borderRadius: 10,
                           border: `1px solid ${selectedTime === t ? 'rgba(123,196,122,0.6)' : 'rgba(255,255,255,0.08)'}`,
                           background: selectedTime === t ? 'rgba(123,196,122,0.15)' : 'rgba(255,255,255,0.02)',
@@ -167,7 +221,7 @@ export default function BookingSection() {
                   </div>
                 </div>
 
-                {/* Passengers */}
+                {/* Passengers & Fare */}
                 <div style={{ marginBottom: '2.5rem' }}>
                   <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#7bc47a', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '0.8rem' }}>
                     <Users size={14} style={{ display: 'inline', marginRight: 6, verticalAlign: '-2px' }} />
@@ -178,7 +232,7 @@ export default function BookingSection() {
                       <button
                         onClick={() => setPassengers(p => Math.max(1, p - 1))}
                         style={{
-                          width: 44, height: 44, borderRadius: 12, // Increased size for mobile
+                          width: 44, height: 44, borderRadius: 12,
                           background: 'rgba(255,255,255,0.05)',
                           border: '1px solid rgba(255,255,255,0.1)',
                           color: '#e8f0e8', fontSize: '1.4rem', cursor: 'pointer',
@@ -191,7 +245,7 @@ export default function BookingSection() {
                       <button
                         onClick={() => setPassengers(p => Math.min(16, p + 1))}
                         style={{
-                          width: 44, height: 44, borderRadius: 12, // Increased size for mobile
+                          width: 44, height: 44, borderRadius: 12,
                           background: 'rgba(123,196,122,0.1)',
                           border: '1px solid rgba(123,196,122,0.25)',
                           color: '#7bc47a', fontSize: '1.4rem', cursor: 'pointer',
@@ -202,16 +256,24 @@ export default function BookingSection() {
                     
                     <div style={{ marginLeft: 'auto', textAlign: 'right' }}>
                       <div style={{ fontSize: '0.8rem', color: 'rgba(232,240,232,0.5)', marginBottom: 2 }}>Estimated Fare</div>
-                      <div style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 700, color: '#e8b84b', lineHeight: 1 }}>₱{fare}</div>
+                      <motion.div 
+                        key={fare}
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 700, color: '#e8b84b', lineHeight: 1 }}
+                      >
+                        ₱{fare}
+                      </motion.div>
                     </div>
                   </div>
                 </div>
 
                 <button
                   onClick={handleBook}
+                  disabled={!selectedRoute || !selectedTime}
                   style={{
                     width: '100%',
-                    padding: '16px', // Taller button for mobile thumb comfort
+                    padding: '16px',
                     background: selectedRoute && selectedTime
                       ? 'linear-gradient(135deg, #2d5a3d, #4a8c5c)'
                       : 'rgba(255,255,255,0.05)',
@@ -278,7 +340,7 @@ export default function BookingSection() {
 
           {/* Info panel */}
           <div style={{ 
-            flex: '1 1 min(100%, 300px)', // Shrinks naturally beside the form on desktop, stacks full width on mobile
+            flex: '1 1 min(100%, 300px)',
             display: 'flex', 
             flexDirection: 'column', 
             gap: 'clamp(0.8rem, 2vw, 1rem)' 
@@ -316,4 +378,3 @@ export default function BookingSection() {
     </section>
   )
 }
-
